@@ -1,26 +1,56 @@
-import { Card, Typography } from '@mui/material'
+import { Box, Card, Typography } from '@mui/material'
 import { ChangeEvent, useState } from 'react'
 import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
 import { CryptoDataGridRowType } from 'src/@core/utils/types'
 import QuickSearchToolbar from './QuickSearchToolbar'
 import PercentageText from 'src/@core/components/mui/text/PercentageText'
+import CustomAvatar from 'src/@core/components/mui/avatar'
+import { getCryptoIcon } from 'src/service/cryptocurrency.service'
 
 const escapeRegExp = (value: string) => {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
+const renderCryptoIcon = (params: GridRenderCellParams) => {
+  const { row } = params
+
+  return <CustomAvatar src={getCryptoIcon(64, row.id)} sx={{ mr: 3, width: '1.875rem', height: '1.875rem' }} />
+}
+
 const columns: GridColumns = [
   {
     flex: 0.08,
-    maxWidth: 100,
+    maxWidth: 150,
     field: 'name',
-    headerName: 'Name'
+    headerName: 'Name',
+    renderCell: (params: GridRenderCellParams) => {
+      const { row } = params
+
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {renderCryptoIcon(params)}
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Typography noWrap variant='body2' sx={{ color: 'text.primary', fontWeight: 600 }}>
+              {row.name}
+            </Typography>
+            <Typography noWrap variant='caption'>
+              {row.symbol}
+            </Typography>
+          </Box>
+        </Box>
+      )
+    }
   },
   {
     flex: 0.08,
     maxWidth: 100,
     field: 'price',
-    headerName: 'Price'
+    headerName: 'Price',
+    renderCell: (params: GridRenderCellParams) => (
+      <Typography variant='body2' sx={{ color: 'text.primary' }}>
+        ${params.row.quote['USD'].price.toFixed(2)}
+      </Typography>
+    )
   },
   {
     flex: 0.08,
@@ -65,7 +95,7 @@ const columns: GridColumns = [
     field: 'volume_24h',
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
-        {params.row.quote['USD'].volume_24h}
+        ${params.row.quote['USD'].volume_24h}
       </Typography>
     )
   },

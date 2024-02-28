@@ -24,8 +24,8 @@ const Home = () => {
   return (
     <Grid container spacing={6}>
       <PageHeader
-        title={<Typography variant='h5'> Crypto Dashboard</Typography>}
-        subtitle={<Typography variant='body2'>Here's Crypto Dashboard</Typography>}
+        title={<Typography variant='h5'>Cryptocurrency Prices</Typography>}
+        subtitle={<Typography variant='body2'>Today's Cryptocurrency Prices by Market Cap</Typography>}
       ></PageHeader>
       <Grid item xs={12}>
         <Card>
