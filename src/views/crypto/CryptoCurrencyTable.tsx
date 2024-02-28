@@ -6,7 +6,6 @@ import QuickSearchToolbar from './QuickSearchToolbar'
 import PercentageText from 'src/@core/components/mui/text/PercentageText'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getCryptoIcon } from 'src/service/cryptocurrency.service'
-import Link from 'next/link'
 
 const escapeRegExp = (value: string) => {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
@@ -33,9 +32,9 @@ const columns: GridColumns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderCryptoIcon(params)}
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Link href='/home/[symbol]' as={`/home/${row.symbol}`} passHref>
-              <a style={{ textDecoration: 'none' }}>{row.name}</a>
-            </Link>
+            <a href={`/home/${row.symbol}`} style={{ textDecoration: 'none' }}>
+              {row.name}
+            </a>
             <Typography noWrap variant='caption'>
               {row.symbol}
             </Typography>
