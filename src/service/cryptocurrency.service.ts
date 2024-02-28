@@ -1,8 +1,15 @@
 import axios, { AxiosResponse } from 'axios'
 
-export async function getCryptoListData(): Promise<any> {
+export async function getCryptoListData(page = 1, limit = 100): Promise<any> {
+  const start = (page - 1) * limit + 1
+
   try {
-    const response: AxiosResponse<any> = await axios.get('/api/getcryptolist')
+    const response: AxiosResponse<any> = await axios.get('/api/getcryptolist', {
+      params: {
+        start,
+        limit
+      }
+    })
 
     return response.data
   } catch (error) {

@@ -136,28 +136,33 @@ const columns: GridColumns = [
 
 type CryptoCurrencyTableProps = {
   data: CryptoDataGridRowType[]
+  limit: number
+  currentPage: number
+  totalColumns: number // Add totalColumns prop
+  onPageChange: (newPage: number) => void
 }
 
 const CryptoCurrencyTable = (props: CryptoCurrencyTableProps) => {
-  const [pageSize, setPageSize] = useState<number>(7)
+  const { data, limit, currentPage, totalColumns, onPageChange } = props
   const [searchText, setSearchText] = useState<string>('')
 
   const [filteredData, setFilteredData] = useState<CryptoDataGridRowType[]>([])
 
+  // Correctly use the `newPage` parameter
+  const handlePageChange = (newPage: number) => {
+    onPageChange(newPage + 1) // Add 1 because MUI DataGrid pages are zero-based
+  }
+
   const handleSearch = (searchValue: string) => {
     setSearchText(searchValue)
     const searchRegex = new RegExp(escapeRegExp(searchValue), 'i')
-    const filteredRows = props.data.filter(row => {
+    const filteredRows = data.filter((row: any) => {
       return ['name', 'symbol', 'slug'].some(field => {
-        // @ts-ignore
+        // Assuming row[field] is always defined; otherwise, add null checks
         return searchRegex.test(row[field].toString())
       })
     })
-    if (searchValue.length) {
-      setFilteredData(filteredRows)
-    } else {
-      setFilteredData([])
-    }
+    setFilteredData(searchValue.length ? filteredRows : [])
   }
 
   return (
@@ -165,16 +170,15 @@ const CryptoCurrencyTable = (props: CryptoCurrencyTableProps) => {
       <DataGrid
         autoHeight
         sx={{ mt: 3 }}
-        pageSize={pageSize}
+        pageSize={limit}
         columns={columns}
-        rowsPerPageOptions={[7, 10, 25, 50]}
         components={{ Toolbar: QuickSearchToolbar }}
-        rows={filteredData.length ? filteredData : props.data}
-        onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+        onPageChange={handlePageChange} // Use the corrected handlePageChange function
+        page={currentPage - 1} // MUI DataGrid pages are zero-based
+        rows={filteredData.length ? filteredData : data}
+        rowCount={totalColumns}
+        paginationMode='server' // Ensure you're controlling pagination from the server-side
         componentsProps={{
-          baseButton: {
-            variant: 'outlined'
-          },
           toolbar: {
             value: searchText,
             clearSearch: () => handleSearch(''),
