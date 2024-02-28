@@ -4,14 +4,25 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Home',
+      title: 'Dashboard',
       path: '/home',
-      icon: 'mdi:home-outline',
+      icon: 'mdi:home-outline'
     },
     {
-      title: 'Second Page',
-      path: '/second-page',
-      icon: 'mdi:email-outline',
+      title: 'User',
+      icon: 'mdi:account-outline',
+      children: [
+        {
+          path: '/user/info',
+          title: 'User Info',
+          icon: 'mdi:information-outline'
+        },
+        {
+          path: '/user/setting',
+          title: 'User Setting',
+          icon: 'mdi:account-settings'
+        }
+      ]
     },
     {
       path: '/acl',
@@ -19,6 +30,7 @@ const navigation = (): VerticalNavItemsType => {
       subject: 'acl-page',
       title: 'Access Control',
       icon: 'mdi:shield-outline',
+      disabled: true
     }
   ]
 }

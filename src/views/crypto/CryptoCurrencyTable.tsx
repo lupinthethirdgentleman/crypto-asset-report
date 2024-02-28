@@ -38,7 +38,7 @@ const columns: GridColumns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderCryptoIcon(params)}
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <StyledLink href={`/home/${row.slug}`}>{row.name}</StyledLink>
+            <StyledLink href={`/home/${row.symbol}`}>{row.name}</StyledLink>
             <Typography noWrap variant='caption'>
               {row.symbol}
             </Typography>

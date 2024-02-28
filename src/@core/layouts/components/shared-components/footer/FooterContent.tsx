@@ -17,26 +17,17 @@ const FooterContent = () => {
           ❤️
         </Box>
         {` by `}
-        <Link target='_blank' href='https://pixinvent.com/'>
-          Pixinvent
+        <Link target='_blank' href='https://github.com/lupinthethirdgentleman/'>
+          lupinthethirdgentleman
         </Link>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Link target='_blank' href='https://themeforest.net/licenses/standard'>
-            License
+          <Link target='_blank' href='https://github.com/lupinthethirdgentleman/crypto-asset-report?tab=MIT-1-ov-file'>
+            MIT License
           </Link>
-          <Link target='_blank' href='https://1.envato.market/pixinvent_portfolio'>
-            More Themes
-          </Link>
-          <Link
-            target='_blank'
-            href='https://pixinvent.com/demo/materialize-mui-react-nextjs-admin-template/documentation'
-          >
-            Documentation
-          </Link>
-          <Link target='_blank' href='https://pixinvent.ticksy.com/'>
-            Support
+          <Link target='_blank' href='https://github.com/lupinthethirdgentleman?tab=repositories'>
+            More Repositories
           </Link>
         </Box>
       )}
