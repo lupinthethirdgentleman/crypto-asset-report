@@ -1,4 +1,4 @@
-import { Box, Card, Typography, styled } from '@mui/material'
+import { Box, Card, Typography } from '@mui/material'
 import { ChangeEvent, useState } from 'react'
 import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
 import { CryptoDataGridRowType } from 'src/@core/utils/types'
@@ -18,11 +18,6 @@ const renderCryptoIcon = (params: GridRenderCellParams) => {
   return <CustomAvatar src={getCryptoIcon(64, row.id)} sx={{ mr: 3, width: '1.875rem', height: '1.875rem' }} />
 }
 
-const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: theme.palette.primary.main
-}))
-
 const columns: GridColumns = [
   {
     flex: 0.1,
@@ -38,7 +33,9 @@ const columns: GridColumns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderCryptoIcon(params)}
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <StyledLink href={`/home/${row.symbol}`}>{row.name}</StyledLink>
+            <Link href='/home/[symbol]' as={`/home/${row.symbol}`} passHref>
+              <a style={{ textDecoration: 'none' }}>{row.name}</a>
+            </Link>
             <Typography noWrap variant='caption'>
               {row.symbol}
             </Typography>
