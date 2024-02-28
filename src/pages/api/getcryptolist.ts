@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const response = await axios.get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_COINMARKETCAP_API}v1/cryptocurrency/listings/latest`, {
       headers: {
         'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINMARKETCAP_API_KEY as string
       }
