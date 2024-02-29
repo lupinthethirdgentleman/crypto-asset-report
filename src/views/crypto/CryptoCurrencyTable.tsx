@@ -6,6 +6,7 @@ import QuickSearchToolbar from './QuickSearchToolbar'
 import PercentageText from 'src/@core/components/mui/text/PercentageText'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getCryptoIcon } from 'src/service/cryptocurrency.service'
+import { formatNumber } from 'src/@core/layouts/utils'
 
 const escapeRegExp = (value: string) => {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
@@ -75,7 +76,7 @@ const columns: GridColumns = [
     filterable: false,
     sortable: false,
     renderCell: (params: GridRenderCellParams) => (
-      <PercentageText size='body2' percent={params.row.quote['USD'].volume_change_24h}></PercentageText>
+      <PercentageText size='body2' percent={params.row.quote['USD'].percent_change_24h}></PercentageText>
     )
   },
   {
@@ -97,7 +98,9 @@ const columns: GridColumns = [
     filterable: false,
     sortable: false,
     renderCell: (params: GridRenderCellParams) => (
-      <PercentageText size='body2' percent={params.row.quote['USD'].market_cap}></PercentageText>
+      <Typography variant='body2' sx={{ color: 'text.primary' }}>
+        ${`${formatNumber(params.row.quote['USD'].market_cap)}`}
+      </Typography>
     )
   },
   {
@@ -108,14 +111,9 @@ const columns: GridColumns = [
     filterable: false,
     sortable: false,
     renderCell: (params: GridRenderCellParams) => (
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography variant='body2' sx={{ color: 'text.primary' }}>
-          ${params.row.quote['USD'].volume_24h}
-        </Typography>
-        <Typography noWrap variant='caption'>
-          {`${params.row.quote[params.row.symbol]?.volume_24h ?? 0} ${params.row.symbol}`}
-        </Typography>
-      </Box>
+      <Typography variant='body2' sx={{ color: 'text.primary' }}>
+        ${formatNumber(params.row.quote['USD'].volume_24h)}
+      </Typography>
     )
   },
   {
@@ -127,8 +125,7 @@ const columns: GridColumns = [
     sortable: false,
     renderCell: (params: GridRenderCellParams) => (
       <Typography variant='body2' sx={{ color: 'text.primary' }}>
-        {`${params.row.circulating_supply} ${params.row.symbol}`}
-        {}
+        {`${formatNumber(params.row.circulating_supply)} ${params.row.symbol}`}
       </Typography>
     )
   }
@@ -140,10 +137,11 @@ type CryptoCurrencyTableProps = {
   currentPage: number
   totalColumns: number // Add totalColumns prop
   onPageChange: (newPage: number) => void
+  loading: boolean
 }
 
 const CryptoCurrencyTable = (props: CryptoCurrencyTableProps) => {
-  const { data, limit, currentPage, totalColumns, onPageChange } = props
+  const { data, limit, currentPage, totalColumns, onPageChange, loading } = props
   const [searchText, setSearchText] = useState<string>('')
 
   const [filteredData, setFilteredData] = useState<CryptoDataGridRowType[]>([])
@@ -177,6 +175,7 @@ const CryptoCurrencyTable = (props: CryptoCurrencyTableProps) => {
         page={currentPage - 1} // MUI DataGrid pages are zero-based
         rows={filteredData.length ? filteredData : data}
         rowCount={totalColumns}
+        loading={loading}
         paginationMode='server' // Ensure you're controlling pagination from the server-side
         componentsProps={{
           toolbar: {

@@ -48,17 +48,14 @@ const Home = () => {
       ></PageHeader>
       <Grid item xs={12}>
         <Card>
-          {loading ? (
-            <Typography variant='body1'>Loading...</Typography>
-          ) : (
-            <CryptoCurrencyTable
-              totalColumns={totalColumns}
-              currentPage={currentPage}
-              limit={limit}
-              data={data}
-              onPageChange={handlePageChange}
-            />
-          )}
+          <CryptoCurrencyTable
+            totalColumns={totalColumns}
+            currentPage={currentPage}
+            limit={limit}
+            data={data}
+            onPageChange={handlePageChange}
+            loading={loading}
+          />
         </Card>
       </Grid>
     </Grid>

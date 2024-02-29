@@ -19,6 +19,18 @@ export async function getCryptoListData(page = 1, limit = 100): Promise<any> {
   }
 }
 
+export async function getCryptoInfo(symbol: any): Promise<any> {
+  try {
+    const response: AxiosResponse<any> = await axios.get(`/api/${symbol}`)
+
+    return response.data.data[symbol]
+  } catch (error) {
+    console.error('Error fetching data:', error)
+
+    return null
+  }
+}
+
 export function getCryptoIcon(size: number, name: any): any {
   const resourceUrl: string = process.env.NEXT_PUBLIC_COINMARKETCAP_RESOURCE_API ?? ''
 

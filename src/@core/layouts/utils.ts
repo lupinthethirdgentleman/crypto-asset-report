@@ -74,3 +74,13 @@ export const removeChildren = (children: NavLink[], openGroup: string[], current
     }
   })
 }
+
+export function formatNumber(number: number): string {
+  if (number >= 1000000) {
+    return (number / 1000000).toLocaleString('en-US', { maximumFractionDigits: 2 }) + 'M'
+  } else if (number >= 1000) {
+    return (number / 1000).toLocaleString('en-US', { maximumFractionDigits: 2 }) + 'K'
+  } else {
+    return number.toLocaleString('en-US')
+  }
+}
