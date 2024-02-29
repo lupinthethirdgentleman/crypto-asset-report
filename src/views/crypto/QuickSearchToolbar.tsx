@@ -25,7 +25,7 @@ const QuickSearchToolbar = (props: Props) => {
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'space-between',
-        p: theme => theme.spacing(2, 5, 4, 5)
+        p: (theme: any) => theme.spacing(2, 5, 4, 5)
       }}
     >
       <TextField
